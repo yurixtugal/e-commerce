@@ -1,5 +1,6 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
+import ModalProvider from '@/provider/modal-provider'
 
 
 export default function RootLayout({
@@ -11,7 +12,10 @@ export default function RootLayout({
   return (
     <ClerkProvider >
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <ModalProvider />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   )
