@@ -99,8 +99,8 @@ const CreateStoreModal = () => {
                     </FormItem>
                   )}
                 />
-                <Button className="py-5" type="submit">
-                  Create {isLoading && <Loader className="ml-2" size={20} />}
+                <Button className="py-5" type="submit" disabled={isLoading}>
+                  Create
                 </Button>
               </form>
             </Form>

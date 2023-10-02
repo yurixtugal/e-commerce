@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <ClerkProvider >
+    <ClerkProvider>
       <html lang="en">
         <body>
           <ModalProvider />
