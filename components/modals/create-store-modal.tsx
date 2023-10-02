@@ -59,7 +59,6 @@ const CreateStoreModal = () => {
   const onSubmit = async (values: Z.infer<typeof formSchema>) => {
     try {
       await axios.post("/api/store", values);
-
       form.reset();
       router.refresh();
       onClose();
