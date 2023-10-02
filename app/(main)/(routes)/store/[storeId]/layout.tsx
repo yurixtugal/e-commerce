@@ -1,4 +1,4 @@
-import NavigationHeader from "@/components/navigation/navigation-headerbar";
+import BarNav from "@/components/navigation/bar-navigation";
 import { getCurrentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
@@ -28,7 +28,7 @@ const StoreIdLayout = async ({
 
     return (
     <div className="h-full">
-      <NavigationHeader />
+      <BarNav />
       <main>{children}</main>
     </div>
   );

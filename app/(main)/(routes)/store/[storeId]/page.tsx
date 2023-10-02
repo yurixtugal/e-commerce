@@ -1,3 +1,5 @@
+import { db } from "@/lib/db";
+
 interface StoreProps {
   params: {
     storeId: string;
@@ -5,12 +7,14 @@ interface StoreProps {
 }
 
 const Store = async ({ params }: StoreProps) => {
-    console.log(params);
+
     const storeId = params.storeId;
     
+    const store = await db.store.findUnique({where: {id: storeId}});
 
+    if (!store) return <div>Store not found</div>
 
-    return <div>{storeId}</div>;
+    return <div>Overview</div>;
 };
 
 export default Store;
