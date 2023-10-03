@@ -1,7 +1,7 @@
-import { Store } from "@prisma/client";
+import { BillBoard, Store } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "createStore" | "deleteStore"
+export type ModalType = "createStore" | "deleteStore" | "deleteBillBoard"
 
 interface ModalUtil {
     type: ModalType|null;
@@ -13,6 +13,7 @@ interface ModalUtil {
 
 interface DataModal {
     store?: Store;
+    billBoard?: BillBoard;
 }
 
 export const useModal = create<ModalUtil>((set) => ({

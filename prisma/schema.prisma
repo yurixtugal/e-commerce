@@ -29,6 +29,20 @@ model Store {
   updatedAt DateTime @updatedAt
 
   user Profile @relation(fields: [userId], references: [id])
+  billBoards BillBoard[]
 
   @@index([userId], name: "userId")
+}
+
+model BillBoard{
+  id String @id @default(uuid())
+  storeId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  imageUrl String
+  name String
+
+  store Store @relation(fields: [storeId], references: [id])
+
+  @@index([storeId], name: "storeId")
 }

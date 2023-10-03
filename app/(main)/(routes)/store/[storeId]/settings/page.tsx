@@ -1,12 +1,10 @@
-import SettingsHeader from "@/components/Settings/settings-header";
+import SettingsHeader from "@/components/Headers/settings-header";
 import SettingsForm from "@/components/forms/setting-forms";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
-import { Delete, Trash, Trash2Icon } from "lucide-react";
 import { redirect, useParams } from "next/navigation";
-import { useRouter } from "next/router";
 
 const Setting = async ({params}:{params: { storeId: string }}) => {
 

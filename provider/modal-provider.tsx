@@ -1,6 +1,7 @@
 "use client";
 
 import CreateStoreModal from "@/components/modals/create-store-modal";
+import DeleteBillBoardModal from "@/components/modals/delete-billBoard-modal";
 import DeleteStoreModal from "@/components/modals/delete-store-modal";
 import { useEffect, useState } from "react";
 const ModalProvider = () => {
@@ -13,8 +14,9 @@ const ModalProvider = () => {
   if (!isMounted) return null;
 
   return <>
-    <CreateStoreModal />
+    <CreateStoreModal />  
     <DeleteStoreModal />
+    <DeleteBillBoardModal />
   </>;
 };
 
