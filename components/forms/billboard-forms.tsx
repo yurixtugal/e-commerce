@@ -74,6 +74,7 @@ const BillBoardForm = ({
       }
       setIsLoading(false);
       router.push(`/store/${storeId}/billboards`);
+      router.refresh();
     } catch (error) {
       console.log(error);
     }

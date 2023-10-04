@@ -30,7 +30,7 @@ const DeleteBillBoardModal = () => {
       await axios.delete(`/api/store/${store?.id}/billboard/${billBoard?.id}`);
       setIsLoading(false);
       onClose();
-      router.push("/")
+      router.push(`/store/${store?.id}/billboards`)
       router.refresh();
     }catch (error) {
       console.log(error)
