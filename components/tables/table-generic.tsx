@@ -40,7 +40,7 @@ interface TableProps<T> {
   store: Store
 }
 
-const TableBillBoard = <T,>({
+const TableGeneric = <T,>({
   arrSource,
   sourceProperties,
   tableType,
@@ -111,4 +111,4 @@ const TableBillBoard = <T,>({
   );
 };
 
-export default TableBillBoard;
+export default TableGeneric;

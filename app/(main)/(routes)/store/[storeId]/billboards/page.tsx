@@ -1,5 +1,5 @@
 import BillBoardHeader from "@/components/Headers/billBoard-header";
-import TableBillBoard from "@/components/tables/table-billboard";
+import TableGeneric from "@/components/tables/table-generic";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import { BillBoard } from "@prisma/client";
@@ -42,7 +42,7 @@ const BillBoard = async ({ params }: { params: { storeId: string } }) => {
       <div className="mx-4 my-2 flex justify-between">
         <Separator />
       </div>
-      <TableBillBoard<BillBoard>
+      <TableGeneric<BillBoard>
         sourceProperties={properties}
         title="List of your recent billboards"
         arrSource={arrBillBoard}
