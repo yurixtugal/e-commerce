@@ -36,7 +36,7 @@ interface TableProps<T> {
   arrTableHeader: ColumnHeader[];
   title: string;
   root: string;
-  sourceModal: "billBoard",
+  sourceModal: string,
   store: Store
 }
 

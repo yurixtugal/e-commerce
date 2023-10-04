@@ -1,4 +1,4 @@
-import BillBoardFormHeader from "@/components/Headers/billBoard-form-header";
+import GenericFormHeader from "@/components/Headers/generic-form-header";
 import BillBoardForm from "@/components/forms/billboard-forms";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
@@ -7,6 +7,7 @@ import { getCurrentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { Trash2Icon } from "lucide-react";
+import { BillBoard } from "@prisma/client";
 
 const BillBoardPage = async ({
   params,
@@ -26,12 +27,15 @@ const BillBoardPage = async ({
     where: { id: params.storeId, userId: profile.id },
   });
 
+  if (!store) return null;
+
   let billBoard = await db.billBoard.findUnique({
     where: { id: params.billBoardId, 
       store: { 
         userId: profile.id
       } },
   });
+
 
   if (!billBoard) {
     title = "Create billboard";
@@ -46,7 +50,7 @@ const BillBoardPage = async ({
   return (
     <>
       <div className="mx-4 my-4 flex justify-between">
-        <BillBoardFormHeader title={title} description={description} billBoard={billBoard} store={store} />
+        <GenericFormHeader<BillBoard> title={title} description={description} source={billBoard} store={store} sourceType="billBoard" modalType="deleteBillBoard" />
       </div>
       <div className="mx-4 my-2 flex justify-between">
         <Separator />

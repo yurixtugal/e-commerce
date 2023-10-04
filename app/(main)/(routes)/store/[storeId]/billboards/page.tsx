@@ -1,10 +1,10 @@
-import BillBoardHeader from "@/components/Headers/billBoard-header";
+import GenericHeader from "@/components/Headers/generic-header";
 import TableGeneric from "@/components/tables/table-generic";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/lib/db";
 import { BillBoard } from "@prisma/client";
 
-const BillBoard = async ({ params }: { params: { storeId: string } }) => {
+const BillBoardPage = async ({ params }: { params: { storeId: string } }) => {
   const arrBillBoard = await db.billBoard.findMany({
     where: {
       storeId: params.storeId,
@@ -38,7 +38,11 @@ const BillBoard = async ({ params }: { params: { storeId: string } }) => {
 
   return (
     <>
-      <BillBoardHeader arrBillBoard={arrBillBoard} />
+      <GenericHeader 
+      title={`Billboards (${arrBillBoard?.length})`} 
+      description="In this section you can manage your billboard"
+      routeAddNew={`/store/${store.id}/billboards/new`}
+      />
       <div className="mx-4 my-2 flex justify-between">
         <Separator />
       </div>
@@ -56,4 +60,4 @@ const BillBoard = async ({ params }: { params: { storeId: string } }) => {
   );
 };
 
-export default BillBoard;
+export default BillBoardPage;

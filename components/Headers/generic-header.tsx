@@ -7,20 +7,26 @@ import { BillBoard, Store } from "@prisma/client";
 import { useModal } from "@/hook/use-modal";
 import { useParams, useRouter } from "next/navigation";
 
-const BillBoardHeader = ({ arrBillBoard }: { arrBillBoard: BillBoard[] }) => {
+interface HeaderProps {
+  title: string;
+  description: string;
+  routeAddNew: string;
+}
+
+const GenericHeader = ({ title, description, routeAddNew }: HeaderProps) => {
   
   const router = useRouter();  
   const params = useParams();
   
   const addNew = () => {
-    router.push(`/store/${params.storeId}/billboards/new`);
+    router.push(routeAddNew);
   }
 
   return (
     <div className="mx-4 my-4 flex justify-between">
       <Heading
-        title={`Billboards (${arrBillBoard.length})`}
-        description="In this section you can manage your billboard"
+        title={title}
+        description={description}
       />
       <Button variant="default" size="sm" onClick={()=>addNew()}>
         <Plus className="h-5 w-5" /> Add new
@@ -29,4 +35,4 @@ const BillBoardHeader = ({ arrBillBoard }: { arrBillBoard: BillBoard[] }) => {
   );
 };
 
-export default BillBoardHeader;
+export default GenericHeader;
