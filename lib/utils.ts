@@ -1,8 +1,9 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
- 
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import BillBoard from "@prisma/client";
+
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const formatValue = (value: any): string => {
@@ -14,8 +15,12 @@ export const formatValue = (value: any): string => {
     return value.toLocaleDateString();
   }
 
-  if (typeof value === "object") {
-    return value.toString();
+  if (typeof value === "object" && value !== null) {
+    try {
+      return parseModelPrisma(value);
+    } catch (error) {
+      return value.toString();
+    }
   }
 
   if (typeof value === "string") {
@@ -32,3 +37,12 @@ export const formatValue = (value: any): string => {
 
   return value;
 };
+
+function parseModelPrisma(value: any): string {
+  try {
+    const model = JSON.parse(JSON.stringify(value));
+    return model["name"] || model["label"];
+  } catch (error) {
+    return value.toString();
+  }
+}

@@ -22,7 +22,7 @@ const GenericFormHeader = <T,>({
   source,
   store,
   sourceType,
-  modalType
+  modalType,
 }: FormHeaderProps<T>) => {
   const { onOpen } = useModal();
 
@@ -33,32 +33,24 @@ const GenericFormHeader = <T,>({
     router.push(`/store/${params.storeId}/billboards/new`);
   };
 
-  if (!source) {
-    return (
-      <>
-        <Heading title={title} description={description} />
-        <Button variant="default" size="sm" onClick={() => addNew()}>
-          <Plus className="h-5 w-5" /> Add new
-        </Button>
-      </>
-    );
-  }
-
   return (
     <>
       <Heading title={title} description={description} />
-      <Button
-        variant="destructive"
-        size="sm"
-        onClick={() =>
-          onOpen(modalType, {
-            store,
-            [sourceType]: source as T,
-          })
-        }
-      >
-        <Trash2Icon className="h-5 w-5" />
-      </Button>
+
+      {source && (
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() =>
+            onOpen(modalType, {
+              store,
+              [sourceType]: source as T,
+            })
+          }
+        >
+          <Trash2Icon className="h-5 w-5" />
+        </Button>
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { BillBoard, Store } from "@prisma/client";
 
@@ -32,12 +32,12 @@ type ColumnHeader = {
 interface TableProps<T> {
   arrSource: T[];
   sourceProperties: string[];
-  tableType: "BillBoard";
+  tableType: "BillBoard" | "Category" | "Size" | "Color";
   arrTableHeader: ColumnHeader[];
   title: string;
   root: string;
-  sourceModal: string,
-  store: Store
+  sourceModal: string;
+  store: Store;
 }
 
 const TableGeneric = <T,>({
@@ -48,22 +48,21 @@ const TableGeneric = <T,>({
   title,
   root,
   sourceModal,
-  store
+  store,
 }: TableProps<T>) => {
-
+  console.log("[SOURCE]", arrSource);
   const router = useRouter();
 
   const { onOpen } = useModal();
- 
 
   const onDelete = (id: string) => {
     console.log(id);
-    alert("Eliminado"+id)
-  }
+    alert("Eliminado" + id);
+  };
 
   const onUpdate = (id: string) => {
     router.push(`${root}/${id}`);
-  }
+  };
 
   return (
     <div className="mx-4 my-2 flex justify-between">
@@ -83,7 +82,7 @@ const TableGeneric = <T,>({
           {arrSource.map((source) => {
             type ObjectKey = keyof typeof source;
             return (
-              <TableRow key={"-"}>
+              <TableRow key={`-${source["id" as ObjectKey]}`}>
                 {sourceProperties.map((property) => {
                   const value = source[property as ObjectKey];
 
@@ -94,10 +93,27 @@ const TableGeneric = <T,>({
                 <TableCell>
                   <div className="flex justify-center">
                     <DropdownMenu>
-                      <DropdownMenuTrigger><MoreHorizontal /></DropdownMenuTrigger>
+                      <DropdownMenuTrigger>
+                        <MoreHorizontal />
+                      </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem onClick={()=>onUpdate( source['id' as ObjectKey] as string)}>Update <Edit2 className="ml-auto h-4 w-4" /></DropdownMenuItem>
-                        <DropdownMenuItem onClick={()=>onOpen(`delete${tableType}` as ModalType,{store,[sourceModal]: source as T})}>Delete <Trash2 className="ml-auto h-4 w-4" /></DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            onUpdate(source["id" as ObjectKey] as string)
+                          }
+                        >
+                          Update <Edit2 className="ml-auto h-4 w-4" />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            onOpen(`delete${tableType}` as ModalType, {
+                              store,
+                              [sourceModal]: source as T,
+                            })
+                          }
+                        >
+                          Delete <Trash2 className="ml-auto h-4 w-4" />
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>

@@ -30,6 +30,8 @@ model Store {
 
   user Profile @relation(fields: [userId], references: [id])
   billBoards BillBoard[]
+  sizes Size[]
+  colors Color[]
 
   @@index([userId], name: "userId")
 }
@@ -58,4 +60,28 @@ model Category {
   updatedAt DateTime @updatedAt
 
   @@index([billBoardId], name: "billBoardId")
+}
+
+model Size {
+  id  String @id @default(uuid())
+  name String
+  value String
+  storeId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Store Store @relation(fields: [storeId], references: [id])
+
+  @@index([storeId], name: "storeId")
+}
+
+model Color {
+  id String @id @default(uuid())
+  name String
+  value String
+  storeId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Store Store @relation(fields: [storeId], references: [id])
+
+  @@index([storeId], name: "storeId")
 }
