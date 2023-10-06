@@ -8,7 +8,7 @@ const ProductPage = async ({ params }: { params: { storeId: string } }) => {
   const arrProducts = await db.product.findMany({
     where: {
       storeId: params.storeId,
-    },
+    }
   });
 
   const store = await db.store.findUnique({

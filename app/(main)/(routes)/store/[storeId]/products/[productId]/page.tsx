@@ -5,6 +5,7 @@ import ProductForm from "@/components/forms/product-forms";
 import { Separator } from "@/components/ui/separator";
 import { getCurrentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { ProductWithImage } from "@/lib/types";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { Category, Color, Product, Size } from "@prisma/client";
 
@@ -34,6 +35,9 @@ const ColorPage = async ({
         userId: profile.id,
       },
     },
+    include: {
+      images: true,
+    },  
   });
   if (!product) {
     title = "Create product";
@@ -72,7 +76,7 @@ const ColorPage = async ({
         <ProductForm
           labelButton={labelButton}
           storeId={params.storeId}
-          product={product}
+          product={product as ProductWithImage}
           arrCategories = {arrCategories}
         />
       </div>

@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { BillBoard, Category, Color, Product, Size, Store } from "@prisma/client";
+import { BillBoard, Category, Color, ImagesProduct, Product, Size, Store } from "@prisma/client";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -32,6 +32,9 @@ import {
 } from "@/components/ui/popover";
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import FileUpload from "../ui/file-upload";
+import MultiFileUpload from "../ui/multifile-upload";
+import { ProductWithImage } from "@/lib/types";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -40,10 +43,13 @@ const formSchema = z.object({
   categoryId: z.string().min(1, {
     message: "Category is required.",
   }),
+  imagesUrl: z.array(z.string()).min(1, {
+    message: "Image is required.",
+  }),
 });
 
 interface ProductFormProps {
-  product?: Product | null;
+  product?: ProductWithImage;
   labelButton?: string;
   storeId?: string;
   arrCategories?: Category[];
@@ -60,6 +66,7 @@ const ProductForm = ({ product, labelButton, storeId, arrCategories }: ProductFo
     defaultValues: {
       name: product?.name?.toString() || "",
       categoryId: product?.categoryId?.toString() || "",
+      imagesUrl: product?.images?.map((image) => image.imageUrl) || [],
     },
   });
 
@@ -95,6 +102,25 @@ const ProductForm = ({ product, labelButton, storeId, arrCategories }: ProductFo
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
+        <div className="grid grid-cols-4 gap-10 w-full my-5">
+        <FormField
+              control={form.control}
+              name="imagesUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Product Images</FormLabel>
+                  <FormControl>
+                  <MultiFileUpload 
+                            endpoint="multipleImages"
+                            value={field.value}
+                            onChange={field.onChange}
+                          />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            </div>
           <div className="grid grid-cols-4 gap-10 w-full my-5">
             <FormField
               control={form.control}
@@ -168,6 +194,7 @@ const ProductForm = ({ product, labelButton, storeId, arrCategories }: ProductFo
                 </FormItem>
               )}
             />
+
           </div>
           <Button type="submit" disabled={isLoading}>
             {labelButton}
