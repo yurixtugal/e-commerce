@@ -7,7 +7,8 @@ export type ModalType =
   | "deleteBillBoard"
   | "deleteCategory"
   | "deleteSize"
-  | "deleteColor";
+  | "deleteColor"
+  | "deleteProduct";
 
 interface ModalUtil {
   type: ModalType | null;

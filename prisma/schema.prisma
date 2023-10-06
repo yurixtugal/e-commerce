@@ -32,6 +32,7 @@ model Store {
   billBoards BillBoard[]
   sizes Size[]
   colors Color[]
+  products Product[]
 
   @@index([userId], name: "userId")
 }
@@ -55,7 +56,7 @@ model Category {
   name String
   billBoardId String
   billBoard BillBoard @relation(fields: [billBoardId], references: [id])
-
+  products Product[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -70,6 +71,7 @@ model Size {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Store Store @relation(fields: [storeId], references: [id])
+  variants VariantProduct[]
 
   @@index([storeId], name: "storeId")
 }
@@ -82,6 +84,56 @@ model Color {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Store Store @relation(fields: [storeId], references: [id])
+  variants VariantProduct[]
 
   @@index([storeId], name: "storeId")
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  storeId String
+  Store Store @relation(fields: [storeId], references: [id])
+  categoryId String
+  Category Category @relation(fields: [categoryId], references: [id])
+  variants VariantProduct[]
+  images ImagesProduct[]
+  otherCharacteristics Json?
+
+  @@index([storeId], name: "storeId")
+  @@index([categoryId], name: "categoryId")
+
+}
+
+model VariantProduct {
+  id String @id @default(uuid())
+  sizeId String
+  productId String
+  quantity Int
+  price Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Size Size @relation(fields: [sizeId], references: [id])
+  Product Product @relation(fields: [productId], references: [id])
+  colorId String
+  Color Color @relation(fields: [colorId], references: [id])
+
+  @@index([sizeId], name: "sizeId")
+  @@index([productId], name: "productId")
+
+  @@index([colorId], name: "colorId")
+}
+
+model ImagesProduct {
+  id String @id @default(uuid())
+  imageUrl String
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Product Product @relation(fields: [productId], references: [id])
+
+  
+  @@index([productId], name: "productId")
 }
