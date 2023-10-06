@@ -102,7 +102,7 @@ const ProductForm = ({ product, labelButton, storeId, arrCategories }: ProductFo
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
-        <div className="grid grid-cols-4 gap-10 w-full my-5">
+        <div className="grid grid-cols-1 gap-10 w-full my-5">
         <FormField
               control={form.control}
               name="imagesUrl"

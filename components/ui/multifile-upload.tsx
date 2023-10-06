@@ -17,25 +17,26 @@ const MultiFileUpload = ({onChange, value, endpoint}: MultiFileUploadProps) => {
     
     console.log(value,"This is the XD new value")
  
-    if (value.length > 0) return (
-      <div className="relative w-64 h-96">
-        {value.map((url) => (<Image key={url} src={url} alt="Image" fill />))}
-        
-        <button className="absolute top-0 right-0 my-[-8px] mx-[-6px] text-white bg-rose-500 rounded-full p-1 shadow-sm"
-                type="button" onClick={() => onChange(value)}>
-          <X className="w-4 h-4" />
-        </button>
-      </div>
-    );
+    if (value.length > 0) {
+      return (
+        <div className="flex flex-auto ">
+          {value.map(url => (
+            <Image key={url} src={url} alt="Image"  className="object-contain"/>
+          ))}
+        </div>
+      )
+    }else{
     
     
     return (
-      <UploadDropzone
+      <UploadDropzone 
+      className="w-96"
         endpoint={endpoint}
         onClientUploadComplete={(res) => onChange(res?.map((file: UploadFileResponse) => file.url))}
         onUploadError={(error: Error)=>{console.log(error)}}
       />
     );
+  }
 }
  
 
