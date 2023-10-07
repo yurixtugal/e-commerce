@@ -8,13 +8,15 @@ export type ModalType =
   | "deleteCategory"
   | "deleteSize"
   | "deleteColor"
-  | "deleteProduct";
+  | "deleteProduct"
+  | "createVariantProduct";
 
 interface ModalUtil {
   type: ModalType | null;
   isOpen: boolean;
   data?: DataModal;
-  onOpen: (modal: ModalType, data?: DataModal) => void;
+  aditionalData?: any;
+  onOpen: (modal: ModalType, data?: DataModal, aditionalData?: any) => void;
   onClose: () => void;
 }
 
@@ -24,13 +26,14 @@ interface DataModal {
   category?: Category;
   size?: Size;
   color?: Color;
+  
 }
 
 export const useModal = create<ModalUtil>((set) => ({
   type: null,
   isOpen: false,
   data: {},
-  onOpen: (modal: ModalType, data?: DataModal) =>
-    set({ type: modal, isOpen: true, data: data ? data : {} }),
+  onOpen: (modal: ModalType, data?: DataModal, aditionalData?: any) =>
+    set({ type: modal, isOpen: true, data: data ? data : {}, aditionalData }),
   onClose: () => set({ type: null, isOpen: false }),
 }));

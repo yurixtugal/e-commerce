@@ -1,6 +1,7 @@
 "use client";
 
 import CreateStoreModal from "@/components/modals/create-store-modal";
+import CreateVriantProductModal from "@/components/modals/create-variante-product-modal";
 import DeleteBillBoardModal from "@/components/modals/delete-billBoard-modal";
 import DeleteCategoryModal from "@/components/modals/delete-category-modal";
 import DeleteColorModal from "@/components/modals/delete-color-modal";
@@ -24,6 +25,7 @@ const ModalProvider = () => {
       <DeleteCategoryModal />
       <DeleteSizeModal />
       <DeleteColorModal />
+      <CreateVriantProductModal />
     </>
   );
 };

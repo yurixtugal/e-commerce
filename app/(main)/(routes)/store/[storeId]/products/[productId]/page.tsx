@@ -5,7 +5,7 @@ import ProductForm from "@/components/forms/product-forms";
 import { Separator } from "@/components/ui/separator";
 import { getCurrentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { ProductWithImage } from "@/lib/types";
+import { ProductDetail } from "@/lib/types";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { Category, Color, Product, Size } from "@prisma/client";
 
@@ -37,6 +37,7 @@ const ColorPage = async ({
     },
     include: {
       images: true,
+      variants: true,
     },  
   });
   if (!product) {
@@ -54,6 +55,18 @@ const ColorPage = async ({
       billBoard:{
         storeId: params.storeId
       }
+    },
+  });
+
+  const arrColors = await db.color.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+  });
+
+  const arrSizes = await db.size.findMany({
+    where: {
+      storeId: params.storeId,
     },
   });
 
@@ -76,8 +89,10 @@ const ColorPage = async ({
         <ProductForm
           labelButton={labelButton}
           storeId={params.storeId}
-          product={product as ProductWithImage}
+          product={product as ProductDetail}
           arrCategories = {arrCategories}
+          arrColors={arrColors}
+          arrSizes={arrSizes}
         />
       </div>
     </>
