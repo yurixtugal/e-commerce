@@ -7,6 +7,7 @@ import DeleteCategoryModal from "@/components/modals/delete-category-modal";
 import DeleteColorModal from "@/components/modals/delete-color-modal";
 import DeleteSizeModal from "@/components/modals/delete-size-modal";
 import DeleteStoreModal from "@/components/modals/delete-store-modal";
+import DetailProductModal from "@/components/modals/detail-product-modal";
 import { useEffect, useState } from "react";
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -26,6 +27,7 @@ const ModalProvider = () => {
       <DeleteSizeModal />
       <DeleteColorModal />
       <CreateVriantProductModal />
+      <DetailProductModal />
     </>
   );
 };

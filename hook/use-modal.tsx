@@ -1,3 +1,4 @@
+import { ProductAllDetail } from "@/lib/types";
 import { BillBoard, Category, Color, Size, Store } from "@prisma/client";
 import { create } from "zustand";
 
@@ -9,7 +10,8 @@ export type ModalType =
   | "deleteSize"
   | "deleteColor"
   | "deleteProduct"
-  | "createVariantProduct";
+  | "createVariantProduct"
+  | "detailProduct";
 
 interface ModalUtil {
   type: ModalType | null;
@@ -26,6 +28,7 @@ interface DataModal {
   category?: Category;
   size?: Size;
   color?: Color;
+  product?: ProductAllDetail;
   
 }
 

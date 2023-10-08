@@ -19,22 +19,32 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Delete, Edit2, MoreHorizontal, Trash2 } from "lucide-react";
+import {
+  Delete,
+  Edit2,
+  FileKey,
+  MoreHorizontal,
+  SearchCheckIcon,
+  SearchIcon,
+  Trash2,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
-import { formatValue } from "@/lib/utils";
+import {
+  formatValue,
+  getColors,
+  getSingleQuantity,
+  getSize,
+} from "@/lib/utils";
 import { ModalType, useModal } from "@/hook/use-modal";
-import { ProductDetail } from "@/lib/types";
-
-
+import { ProductAllDetail, ProductDetail } from "@/lib/types";
+import { Button } from "../ui/button";
 
 interface TableProps {
-  arrProducts: ProductDetail[];
+  arrProducts: ProductAllDetail[];
 }
 
-const ProductTable = ({
-  arrProducts
-}: TableProps) => {
-
+const ProductTable = ({ arrProducts }: TableProps) => {
+  const {onOpen} = useModal();
 
   return (
     <div className="mx-4 my-2 flex justify-between">
@@ -42,18 +52,81 @@ const ProductTable = ({
         <TableCaption> List of products </TableCaption>
         <TableHeader>
           <TableRow>
-            
-              <TableHead key="name">Name</TableHead>
-              <TableHead key="category">Category</TableHead>
-              <TableHead key="colors">Colors</TableHead>
-              <TableHead key="sizes">Sizes</TableHead>
-              <TableHead key="price">Base Price</TableHead>
-              <TableHead key="quantity">Quantity</TableHead>
-              <TableHead key="inventory">Inventory</TableHead>
-              <TableHead></TableHead>
+            <TableHead key="name">Name</TableHead>
+            <TableHead key="category" className="text-center">Category</TableHead>
+            <TableHead key="colors" className="text-center">Colors</TableHead>
+            <TableHead key="sizes" className="text-center">Sizes</TableHead>
+            <TableHead key="price" className="text-center">Base Price</TableHead>
+            <TableHead key="inventory" className="text-center">Inventory</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
-        
+        <TableBody>
+          {arrProducts.map((product) => {
+            const colors = getColors(product);
+            const sizes = getSize(product);
+            return (
+              <TableRow key={product.id}>
+                <TableCell >{product.name}</TableCell>
+                <TableCell className="text-center">{product.Category.name}</TableCell>
+                <TableCell className="text-center">
+                  {!product.isVariant && "N/A"}
+                  <div
+                    key={`base_color_${product.id}`}
+                    className="space-x-5 inline-flex"
+                  >
+                    {!!product.isVariant &&
+                      colors?.map((color) => {
+                        return (
+                          <div
+                            className="w-4 h-4 rounded-full"
+                            style={{ backgroundColor: color?.value }}
+                            key={`base_color_${color?.id}`}
+                          ></div>
+                        );
+                      })}
+                  </div>
+                </TableCell>
+                <TableCell className="text-center">
+                  {!product.isVariant && "N/A"}
+                  {!!product.isVariant &&
+                    sizes?.map((size) => size.value).join(" - ")}
+                </TableCell>
+                <TableCell className="text-center">{product.basePrice}</TableCell>
+                <TableCell className="text-center">
+                  {!product.isVariant && getSingleQuantity(product)}
+                  {!!product.isVariant && (
+                    <Button variant="link"
+                      onClick={() =>
+                        onOpen("detailProduct",{ product} ,undefined)
+                      }
+                    >
+                      <span className="mr-2">View</span>
+                      <SearchIcon className="w-4 h-4" />
+                    </Button>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <MoreHorizontal />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => alert("update")}>
+                          Update <Edit2 className="ml-auto h-4 w-4" />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => alert("delete")}>
+                          Delete <Trash2 className="ml-auto h-4 w-4" />
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
       </Table>
     </div>
   );
