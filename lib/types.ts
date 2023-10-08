@@ -18,8 +18,8 @@ export type ProductAllDetail = Product & {
 } 
 
 export const variantSchema = z.object({
-  sizeId: z.string().min(1, { message: "Size is required" }),
-  colorId: z.string().min(1, { message: "Color is required" }),
+  sizeId: z.string().nullable(),
+  colorId: z.string().nullable(),
   quantity: z.coerce.number().min(1, { message: "Quantity is required" }),
   price: z.coerce.number().min(1, { message: "Price is required" }),
 });
