@@ -41,10 +41,16 @@ import { Button } from "../ui/button";
 
 interface TableProps {
   arrProducts: ProductAllDetail[];
+  store: Store;
 }
 
-const ProductTable = ({ arrProducts }: TableProps) => {
+const ProductTable = ({ arrProducts, store }: TableProps) => {
   const {onOpen} = useModal();
+  const router = useRouter();
+  
+  const onUpdate = (id: string) => {
+    router.push(`/store/${store.id}/products/${id}`);
+  }
 
   return (
     <div className="mx-4 my-2 flex justify-between">
@@ -94,7 +100,18 @@ const ProductTable = ({ arrProducts }: TableProps) => {
                 </TableCell>
                 <TableCell className="text-center">{product.basePrice}</TableCell>
                 <TableCell className="text-center">
-                  {!product.isVariant && getSingleQuantity(product)}
+                  {!product.isVariant && (
+                    <>
+                    {getSingleQuantity(product)}
+                    <Button variant="link" className="hidden"
+                      onClick={() =>
+                        onOpen("detailProduct",{ product} ,undefined)
+                      }
+                    >
+                      <span className="mr-2">View</span>
+                      <SearchIcon className="w-4 h-4" />
+                    </Button>
+                    </>)}
                   {!!product.isVariant && (
                     <Button variant="link"
                       onClick={() =>
@@ -113,10 +130,11 @@ const ProductTable = ({ arrProducts }: TableProps) => {
                         <MoreHorizontal />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => alert("update")}>
+                        <DropdownMenuItem onClick={() => onUpdate(product.id)}>
                           Update <Edit2 className="ml-auto h-4 w-4" />
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => alert("delete")}>
+                        <DropdownMenuItem onClick={() =>{ 
+                          onOpen("deleteProduct",{product, store})}}>
                           Delete <Trash2 className="ml-auto h-4 w-4" />
                         </DropdownMenuItem>
                       </DropdownMenuContent>

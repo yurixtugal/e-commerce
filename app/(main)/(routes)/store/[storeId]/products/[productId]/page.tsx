@@ -5,11 +5,11 @@ import ProductForm from "@/components/forms/product-forms";
 import { Separator } from "@/components/ui/separator";
 import { getCurrentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { ProductDetail } from "@/lib/types";
+import { ProductAllDetail, ProductDetail } from "@/lib/types";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { Category, Color, Product, Size } from "@prisma/client";
 
-const ColorPage = async ({
+const ProductPage = async ({
   params,
 }: {
   params: { storeId: string; productId: string };
@@ -37,7 +37,12 @@ const ColorPage = async ({
     },
     include: {
       images: true,
-      variants: true,
+      variants: {
+        include: {
+          Color: true,
+          Size: true,
+        },
+      },
     },  
   });
   if (!product) {
@@ -89,7 +94,7 @@ const ColorPage = async ({
         <ProductForm
           labelButton={labelButton}
           storeId={params.storeId}
-          product={product as ProductDetail}
+          product={product as ProductAllDetail}
           arrCategories = {arrCategories}
           arrColors={arrColors}
           arrSizes={arrSizes}
@@ -99,4 +104,4 @@ const ColorPage = async ({
   );
 };
 
-export default ColorPage;
+export default ProductPage;

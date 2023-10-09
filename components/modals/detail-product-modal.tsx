@@ -55,11 +55,11 @@ const DetailProductModal = () => {
                     <TableCell className="text-center">
                       <div
                         className="w-4 h-4 rounded-full inline-block"
-                        style={{ backgroundColor: variant.Color.value }}
+                        style={{ backgroundColor: variant.Color?.value }}
                       ></div>
                     </TableCell>
                     <TableCell className="text-center">
-                      {variant.Size.value}
+                      {variant.Size?.value}
                     </TableCell> 
                     <TableCell className="text-center">
                       {variant.quantity}

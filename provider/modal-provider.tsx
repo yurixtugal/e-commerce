@@ -5,6 +5,7 @@ import CreateVriantProductModal from "@/components/modals/create-variante-produc
 import DeleteBillBoardModal from "@/components/modals/delete-billBoard-modal";
 import DeleteCategoryModal from "@/components/modals/delete-category-modal";
 import DeleteColorModal from "@/components/modals/delete-color-modal";
+import DeleteProductModal from "@/components/modals/delete-product-modal";
 import DeleteSizeModal from "@/components/modals/delete-size-modal";
 import DeleteStoreModal from "@/components/modals/delete-store-modal";
 import DetailProductModal from "@/components/modals/detail-product-modal";
@@ -20,6 +21,7 @@ const ModalProvider = () => {
 
   return (
     <>
+      <DetailProductModal />
       <CreateStoreModal />
       <DeleteStoreModal />
       <DeleteBillBoardModal />
@@ -27,7 +29,8 @@ const ModalProvider = () => {
       <DeleteSizeModal />
       <DeleteColorModal />
       <CreateVriantProductModal />
-      <DetailProductModal />
+      
+      <DeleteProductModal />
     </>
   );
 };

@@ -59,7 +59,7 @@ const ProductPage = async ({ params }: { params: { storeId: string } }) => {
       <div className="mx-4 my-2 flex justify-between">
         <Separator />
       </div>
-      <ProductTable arrProducts={arrProducts as ProductAllDetail[]} />
+      <ProductTable arrProducts={arrProducts as ProductAllDetail[]} store={store} />
       
     </>
   );

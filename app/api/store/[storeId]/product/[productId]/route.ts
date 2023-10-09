@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; colorId: string } }
+  { params }: { params: { storeId: string; productId: string } }
 ) {
   try {
     const profile = await getCurrentProfile();
@@ -13,9 +13,9 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { colorId, storeId } = params;
+    const { productId, storeId } = params;
 
-    if (!storeId || !colorId) {
+    if (!storeId || !productId) {
       return new NextResponse("Bad Request", { status: 400 });
     }
 
@@ -28,17 +28,33 @@ export async function DELETE(
 
     if (!store) return new NextResponse("Not Found", { status: 404 });
 
-    const color = await db.color.delete({
+    const productVariant = await db.variantProduct.deleteMany({
       where: {
-        id: colorId,
+        productId: productId,
+      },
+    });
+
+    const productImage = await db.imagesProduct.deleteMany({
+      where: {
+        productId: productId,
+      },
+    });
+
+    const product = await db.product.delete({
+      where: {
+        id: productId,
         storeId: storeId,
         Store: {
           userId: profile.id,
         },
       },
+      include: {
+        variants: true,
+        images: true,
+      }
     });
 
-    return NextResponse.json(color);
+    return NextResponse.json(product);
   } catch (error) {
     console.log("[BILLBOARD_ID_DELETE]", error);
     return new NextResponse("Internal Error", { status: 500 });
@@ -47,7 +63,7 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; colorId: string } }
+  { params }: { params: { storeId: string; productId: string } }
 ) {
   try {
     const profile = await getCurrentProfile();
@@ -56,11 +72,21 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { storeId, colorId } = params;
+    const { storeId, productId } = params;
 
-    const { name, value } = await req.json();
+    const valuesProduct = await req.json();
+    
+    const {
+      name,
+      categoryId,
+      imagesUrl,
+      variants,
+      isVariant,
+      basePrice,
+      quantity,
+    } = valuesProduct;
 
-    if (!storeId || !colorId) {
+    if (!storeId || !productId) {
       return new NextResponse("Bad Request", { status: 400 });
     }
 
@@ -73,9 +99,9 @@ export async function PATCH(
 
     if (!store) return new NextResponse("Not Found", { status: 404 });
 
-    const color = await db.color.update({
+    const product = await db.product.update({
       where: {
-        id: colorId,
+        id: productId,
         storeId: storeId,
         Store: {
           userId: profile.id,
@@ -83,11 +109,23 @@ export async function PATCH(
       },
       data: {
         name: name,
-        value: value,
+        categoryId: categoryId,
+        storeId: storeId,
+        basePrice: basePrice,
+        isVariant: isVariant,
+        images: {
+          createMany: {
+            data: imagesUrl,
+          },
+        },
+        variants: {
+          createMany: {
+            data: variants,
+          },
+        },
       },
     });
-
-    return NextResponse.json(color);
+    return NextResponse.json(product);
   } catch (error) {
     console.log("[BILLBOARD_ID_PATCH]", error);
     return new NextResponse("Internal Error", { status: 500 });

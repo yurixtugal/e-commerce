@@ -51,7 +51,7 @@ import { CheckIcon, ChevronsUpDown, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FileUpload from "../ui/file-upload";
 import MultiFileUpload from "../ui/multifile-upload";
-import { ProductDetail } from "@/lib/types";
+import { ProductAllDetail, ProductDetail } from "@/lib/types";
 import { variantSchema } from "@/lib/types";
 import { useModal } from "@/hook/use-modal";
 import { Checkbox } from "../ui/checkbox";
@@ -80,7 +80,7 @@ const formSchema = z.object({
 });
 
 interface ProductFormProps {
-  product?: ProductDetail;
+  product?: ProductAllDetail;
   labelButton?: string;
   storeId?: string;
   arrCategories?: Category[];

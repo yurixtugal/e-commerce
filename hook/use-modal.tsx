@@ -30,13 +30,14 @@ interface DataModal {
   color?: Color;
   product?: ProductAllDetail;
   
-}
+} 
 
 export const useModal = create<ModalUtil>((set) => ({
   type: null,
   isOpen: false,
   data: {},
-  onOpen: (modal: ModalType, data?: DataModal, aditionalData?: any) =>
-    set({ type: modal, isOpen: true, data: data ? data : {}, aditionalData }),
+  onOpen: (modal: ModalType, data?: DataModal, aditionalData?: any) =>{ 
+    console.log("[ONOPEN]",modal, data, aditionalData);  
+    set({ type: modal, isOpen: true, data: data ? data : {}, aditionalData })},
   onClose: () => set({ type: null, isOpen: false }),
 }));
