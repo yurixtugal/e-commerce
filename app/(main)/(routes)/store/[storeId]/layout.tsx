@@ -20,8 +20,6 @@ const StoreIdLayout = async ({
 
     const store = await db.store.findUnique({where: {id: storeId}});
 
-    console.log("store: ",store)
-
     if (!store) {
         return redirect("/");
     } 
