@@ -8,7 +8,7 @@ export async function POST(
 ) {
   try {
     const valuesProduct = await req.json();
-    console.log("[valuesProduct]", valuesProduct);
+    
     const {
       name,
       categoryId,
@@ -17,6 +17,7 @@ export async function POST(
       isVariant,
       basePrice,
       quantity,
+      isFeatured,
     } = valuesProduct;
     const { storeId } = params;
     const profile = await getCurrentProfile();
@@ -53,6 +54,7 @@ export async function POST(
         storeId: storeId,
         basePrice: basePrice,
         isVariant: isVariant,
+        isFeatured: isFeatured,
         images: {
           createMany: {
             data: arrImages,

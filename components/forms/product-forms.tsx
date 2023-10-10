@@ -76,7 +76,8 @@ const formSchema = z.object({
     }),
   isVariant: z.boolean(),
   quantity: z.coerce.number(),
-  variants: z.array(variantSchema)
+  variants: z.array(variantSchema),
+  isFeatured: z.boolean(),
 });
 
 interface ProductFormProps {
@@ -110,6 +111,7 @@ const ProductForm = ({
       basePrice: product?.basePrice || 0,
       quantity: product?.variants[0].quantity || 0,
       isVariant: product?.isVariant || false,
+      isFeatured: product?.isFeatured || false,
       variants: product?.variants || [],
     },
   });
@@ -275,6 +277,26 @@ const ProductForm = ({
             )}
           </div>
           <div className="grid grid-cols-4 gap-10 w-full my-5">
+          <FormField
+              control={form.control}
+              name="isFeatured"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Do you want to feature this product?</FormLabel>
+                    <FormDescription>
+                      If you want to feature this product, it will be show in the principal page of your e-commerce
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="isVariant"

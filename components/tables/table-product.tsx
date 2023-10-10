@@ -20,6 +20,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
+  Check,
+  CheckCircle,
   Delete,
   Edit2,
   FileKey,
@@ -27,6 +29,8 @@ import {
   SearchCheckIcon,
   SearchIcon,
   Trash2,
+  X,
+  XCircle,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
@@ -60,6 +64,7 @@ const ProductTable = ({ arrProducts, store }: TableProps) => {
           <TableRow>
             <TableHead key="name">Name</TableHead>
             <TableHead key="category" className="text-center">Category</TableHead>
+            <TableHead key="featured" className="text-center">Featured</TableHead>
             <TableHead key="colors" className="text-center">Colors</TableHead>
             <TableHead key="sizes" className="text-center">Sizes</TableHead>
             <TableHead key="price" className="text-center">Base Price</TableHead>
@@ -75,6 +80,13 @@ const ProductTable = ({ arrProducts, store }: TableProps) => {
               <TableRow key={product.id}>
                 <TableCell >{product.name}</TableCell>
                 <TableCell className="text-center">{product.Category.name}</TableCell>
+                <TableCell className="flex justify-center">
+                  {product.isFeatured ? (
+                    <CheckCircle className="w-4 h-4 text-green-500 text-center" />
+                  ) : (
+                    <XCircle className="w-4 h-4 text-red-500  text-center" />
+                  )}
+                </TableCell>
                 <TableCell className="text-center">
                   {!product.isVariant && "N/A"}
                   <div

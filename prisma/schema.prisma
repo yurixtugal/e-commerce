@@ -102,6 +102,7 @@ model Product {
   variants VariantProduct[]
   images ImagesProduct[]
   isVariant Boolean @default(false)
+  isFeatured Boolean @default(false)
 
 
   @@index([storeId], name: "storeId")
