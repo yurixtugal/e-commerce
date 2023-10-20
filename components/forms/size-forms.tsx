@@ -40,6 +40,9 @@ const formSchema = z.object({
   value: z.string().min(1, {
     message: "Value must be at least 1 character.",
   }),
+  order: z.coerce.number().int().min(0, {
+    message: "Order must be at least 0.",
+  }),
 });
 
 interface SizeFormProps {
@@ -59,6 +62,7 @@ const SizeForm = ({ size, labelButton, storeId }: SizeFormProps) => {
     defaultValues: {
       name: size?.name?.toString() || "",
       value: size?.value?.toString() || "",
+      order: size?.order || 0,
     },
   });
 
@@ -114,6 +118,19 @@ const SizeForm = ({ size, labelButton, storeId }: SizeFormProps) => {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Value</FormLabel>
+                  <FormControl>
+                    <Input {...field} disabled={isLoading} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="order"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Order</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={isLoading} />
                   </FormControl>

@@ -58,7 +58,7 @@ export async function PATCH(
 
     const { storeId, sizeId } = params;
 
-    const { name, value } = await req.json();
+    const { name, value, order } = await req.json();
 
     if (!storeId || !sizeId) {
       return new NextResponse("Bad Request", { status: 400 });
@@ -84,6 +84,7 @@ export async function PATCH(
       data: {
         name: name,
         value: value,
+        order: order,
       },
     });
 

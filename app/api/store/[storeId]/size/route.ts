@@ -7,7 +7,7 @@ export async function POST(
   { params }: { params: { storeId: string } }
 ) {
   try {
-    const { name, value } = await req.json();
+    const { name, value, order } = await req.json();
     const { storeId } = params;
     const profile = await getCurrentProfile();
 
@@ -27,6 +27,7 @@ export async function POST(
         name: name,
         value: value,
         storeId: storeId,
+        order: order,
       },
     });
 

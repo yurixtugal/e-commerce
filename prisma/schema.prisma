@@ -67,6 +67,7 @@ model Size {
   id  String @id @default(uuid())
   name String
   value String
+  order Int @default(0)
   storeId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
