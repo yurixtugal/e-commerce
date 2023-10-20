@@ -81,7 +81,7 @@ export async function PATCH(
 
         const { storeId } = params
 
-        const {name} = await req.json()
+        const {name, backgroundImageUrl} = await req.json()
 
         if (!storeId){
             return new NextResponse("Bad Request", { status: 400 })
@@ -93,7 +93,8 @@ export async function PATCH(
                 userId: profile.id
             },
             data: {
-                name: name
+                name: name,
+                backgroundImageUrl: backgroundImageUrl
             }    
         })
 

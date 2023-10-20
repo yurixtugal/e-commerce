@@ -18,11 +18,15 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "react-hot-toast";
+import FileUpload from "../ui/file-upload";
 
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Name must be at least 1 character.",
   }),
+  backgroundImageUrl: z.optional(z.string().min(1, {
+    message: "Background image url must be at least 1 character.",
+  })),
 });
 
 interface SettingsFormProps {
@@ -37,6 +41,7 @@ const SettingsForm = ({ store }: SettingsFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: store.name,
+      backgroundImageUrl: store.backgroundImageUrl,
     },
   });
 
@@ -69,6 +74,23 @@ const SettingsForm = ({ store }: SettingsFormProps) => {
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input {...field} disabled={isLoading} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="backgroundImageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Background Image</FormLabel>
+                  <FormControl>
+                    <FileUpload
+                      endpoint="singleImage"
+                      value={field.value||""}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
