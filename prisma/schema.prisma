@@ -25,6 +25,7 @@ model Store {
   id String @id @default(uuid())
   name String
   backgroundImageUrl String @default("")
+  logoImageUrl String @default("")
   userId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

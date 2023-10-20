@@ -27,6 +27,9 @@ const formSchema = z.object({
   backgroundImageUrl: z.optional(z.string().min(1, {
     message: "Background image url must be at least 1 character.",
   })),
+  logoImageUrl: z.optional(z.string().min(1, {
+    message: "Logo image url must be at least 1 character.",
+  })),
 });
 
 interface SettingsFormProps {
@@ -42,6 +45,7 @@ const SettingsForm = ({ store }: SettingsFormProps) => {
     defaultValues: {
       name: store.name,
       backgroundImageUrl: store.backgroundImageUrl,
+      logoImageUrl: store.logoImageUrl,
     },
   });
 
@@ -85,6 +89,23 @@ const SettingsForm = ({ store }: SettingsFormProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Background Image</FormLabel>
+                  <FormControl>
+                    <FileUpload
+                      endpoint="singleImage"
+                      value={field.value||""}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="logoImageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Logo Image</FormLabel>
                   <FormControl>
                     <FileUpload
                       endpoint="singleImage"
