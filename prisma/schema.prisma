@@ -24,8 +24,21 @@ model Profile {
 model Store {
   id String @id @default(uuid())
   name String
+  address String @default("")
+  description String @default("")
+
   backgroundImageUrl String @default("")
   logoImageUrl String @default("")
+  
+  fbLink String @default("")
+  igLink String @default("")
+  tiktokLink String @default("")
+  xLink String @default("")
+  
+  emailSupport String @default("")
+  phoneSupport String @default("")
+  
+
   userId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
