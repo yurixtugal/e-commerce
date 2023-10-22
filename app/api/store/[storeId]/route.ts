@@ -89,6 +89,7 @@ export async function PATCH(
       tiktokLink,
       emailSupport,
       phoneSupport,
+      showWhatsapp,
     } = await req.json();
 
     if (!storeId) {
@@ -112,6 +113,8 @@ export async function PATCH(
         tiktokLink: tiktokLink,
         emailSupport: emailSupport,
         phoneSupport: phoneSupport,
+        showWhatsapp: showWhatsapp,
+
       },
     });
 

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,6 +22,7 @@ import { Toaster, toast } from "react-hot-toast";
 import FileUpload from "../ui/file-upload";
 import { Textarea } from "../ui/textarea";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Checkbox } from "../ui/checkbox";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -76,6 +78,7 @@ const formSchema = z.object({
       message: "Tiktok link must be at least 1 character.",
     })
   ),
+  showWhatsapp: z.boolean(),
 });
 
 interface SettingsFormProps {
@@ -100,6 +103,7 @@ const SettingsForm = ({ store }: SettingsFormProps) => {
       igLink: store.igLink,
       xLink: store.xLink,
       tiktokLink: store.tiktokLink,
+      showWhatsapp: store.showWhatsapp,
     },
   });
 
@@ -255,6 +259,26 @@ const SettingsForm = ({ store }: SettingsFormProps) => {
                     <Input {...field} disabled={isLoading} />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="showWhatsapp"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>Do you want to show whatsapp icon?</FormLabel>
+                    <FormDescription>
+                      If you want to show whatsapp icon, customers can contact you from the store page.
+                    </FormDescription>
+                  </div>
                 </FormItem>
               )}
             />

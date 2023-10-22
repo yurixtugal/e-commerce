@@ -26,6 +26,7 @@ model Store {
   name String
   address String @default("")
   description String @default("")
+  showWhatsapp Boolean @default(false)
 
   backgroundImageUrl String @default("")
   logoImageUrl String @default("")
